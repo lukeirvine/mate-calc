@@ -1,26 +1,114 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Island Light Theme ─────────────────────────────── */
+[data-theme="island-light"] {
+  color-scheme: light;
+
+  --color-base-100: oklch(97% 0.012 95);
+  --color-base-200: oklch(92% 0.022 105);
+  --color-base-300: oklch(87% 0.028 110);
+  --color-base-content: oklch(18% 0.048 148);
+
+  --color-primary: oklch(37% 0.132 148);
+  --color-primary-content: oklch(97% 0.008 148);
+
+  --color-secondary: oklch(60% 0.118 154);
+  --color-secondary-content: oklch(15% 0.04 154);
+
+  --color-accent: oklch(72% 0.168 60);
+  --color-accent-content: oklch(15% 0.055 60);
+
+  --color-neutral: oklch(30% 0.042 148);
+  --color-neutral-content: oklch(92% 0.02 148);
+
+  --color-info: oklch(72% 0.158 230);
+  --color-info-content: oklch(20% 0.058 230);
+
+  --color-success: oklch(54% 0.172 150);
+  --color-success-content: oklch(97% 0.01 150);
+
+  --color-warning: oklch(72% 0.168 65);
+  --color-warning-content: oklch(20% 0.07 65);
+
+  --color-error: oklch(57% 0.22 25);
+  --color-error-content: oklch(97% 0.01 25);
+
+  --radius-selector: 1.5rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Island Dark Theme ──────────────────────────────── */
+[data-theme="island-dark"] {
+  color-scheme: dark;
+
+  --color-base-100: oklch(20% 0.042 150);
+  --color-base-200: oklch(17% 0.038 150);
+  --color-base-300: oklch(14% 0.032 150);
+  --color-base-content: oklch(87% 0.038 148);
+
+  --color-primary: oklch(68% 0.178 150);
+  --color-primary-content: oklch(10% 0.028 150);
+
+  --color-secondary: oklch(54% 0.128 156);
+  --color-secondary-content: oklch(95% 0.018 156);
+
+  --color-accent: oklch(72% 0.168 60);
+  --color-accent-content: oklch(15% 0.055 60);
+
+  --color-neutral: oklch(27% 0.048 150);
+  --color-neutral-content: oklch(87% 0.032 150);
+
+  --color-info: oklch(72% 0.158 230);
+  --color-info-content: oklch(20% 0.058 230);
+
+  --color-success: oklch(62% 0.175 150);
+  --color-success-content: oklch(10% 0.03 150);
+
+  --color-warning: oklch(74% 0.168 65);
+  --color-warning-content: oklch(20% 0.07 65);
+
+  --color-error: oklch(65% 0.22 25);
+  --color-error-content: oklch(97% 0.01 25);
+
+  --radius-selector: 1.5rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Page background gradients ──────────────────────── */
+[data-theme="island-light"] body {
+  background: linear-gradient(
+    155deg,
+    oklch(95% 0.025 105) 0%,
+    oklch(92% 0.04 145) 55%,
+    oklch(91% 0.048 175) 100%
+  );
+  min-height: 100vh;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+[data-theme="island-dark"] body {
+  background: linear-gradient(
+    155deg,
+    oklch(16% 0.055 148) 0%,
+    oklch(19% 0.048 175) 55%,
+    oklch(17% 0.042 200) 100%
+  );
+  min-height: 100vh;
+}
+
+/* ── Range thumb polish ─────────────────────────────── */
+input[type="range"] {
+  cursor: pointer;
 }
