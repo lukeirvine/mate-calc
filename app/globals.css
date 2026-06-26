@@ -1,9 +1,13 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: island-light, island-dark;
+};
 
 /* ── Island Light Theme ─────────────────────────────── */
-[data-theme="island-light"] {
-  color-scheme: light;
+@plugin "daisyui/theme" {
+  name: "island-light";
+  default: true;
+  prefersdark: false;
 
   --color-base-100: oklch(97% 0.012 95);
   --color-base-200: oklch(92% 0.022 105);
@@ -45,8 +49,10 @@
 }
 
 /* ── Island Dark Theme ──────────────────────────────── */
-[data-theme="island-dark"] {
-  color-scheme: dark;
+@plugin "daisyui/theme" {
+  name: "island-dark";
+  default: false;
+  prefersdark: true;
 
   --color-base-100: oklch(20% 0.042 150);
   --color-base-200: oklch(17% 0.038 150);
