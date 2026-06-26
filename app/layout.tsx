@@ -10,6 +10,7 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Mate Calc — Caffeine in Every Sip",
   description: "Calculate the caffeine content of your yerba mate by brew method, grams, refills, and water temperature.",
+  icons: { icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧉</text></svg>" },
 };
 
 export default function RootLayout({

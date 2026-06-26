@@ -1,4 +1,4 @@
-```
+```js
 function calculateCaffeine(method, yerbaGrams, refills, tempFactor) {
   // Base caffeine content: 1.2% average (12mg per gram)
   const baseCaffeine = yerbaGrams * 12;

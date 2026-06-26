@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 
 type Method = 'gourd' | 'french_press' | 'tea_bag' | 'terere' | 'cocido'
 type TempPreset = 'hot' | 'warm' | 'cold'
+type TempUnit = 'C' | 'F'
 type Theme = 'island-light' | 'island-dark'
 
 const TEMP_FACTORS: Record<TempPreset, number> = {
@@ -20,10 +21,10 @@ const METHODS: Array<{ id: Method; label: string; icon: string; desc: string; ra
   { id: 'cocido',       label: 'Cocido',       icon: '🫖', desc: 'Boiled single brew',                   rate: '55%' },
 ]
 
-const TEMP_OPTS: Array<{ id: TempPreset; emoji: string; label: string; sub: string }> = [
-  { id: 'hot',  emoji: '🔥', label: 'Hot',  sub: '~90°C · ×1.00' },
-  { id: 'warm', emoji: '♨️', label: 'Warm', sub: '~70°C · ×0.85' },
-  { id: 'cold', emoji: '🧊', label: 'Cold', sub: '~20°C · ×0.70' },
+const TEMP_OPTS: Array<{ id: TempPreset; emoji: string; label: string; tempC: number; tempF: number }> = [
+  { id: 'hot',  emoji: '🔥', label: 'Hot',  tempC: 90,  tempF: 194 },
+  { id: 'warm', emoji: '♨️', label: 'Warm', tempC: 70,  tempF: 158 },
+  { id: 'cold', emoji: '🧊', label: 'Cold', tempC: 20,  tempF: 68  },
 ]
 
 const INTENSITY: Record<string, { label: string; badge: string; progress: string; text: string }> = {
@@ -73,6 +74,7 @@ export function MateCalc() {
   const [grams, setGrams] = useState(50)
   const [refills, setRefills] = useState(6)
   const [tempPreset, setTempPreset] = useState<TempPreset>('hot')
+  const [tempUnit, setTempUnit] = useState<TempUnit>('C')
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -228,9 +230,28 @@ export function MateCalc() {
 
             {/* Water temperature */}
             <div className="flex flex-col gap-2.5">
-              <label className="text-sm font-semibold text-base-content/65">
-                Water Temperature
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold text-base-content/65">
+                  Water Temperature
+                </label>
+                <div className="flex rounded-lg overflow-hidden border border-base-300 text-[10px] font-bold">
+                  {(['C', 'F'] as TempUnit[]).map((u, i) => (
+                    <button
+                      key={u}
+                      onClick={() => setTempUnit(u)}
+                      className={[
+                        'px-2 py-0.5 transition-colors duration-150',
+                        i > 0 ? 'border-l border-base-300' : '',
+                        tempUnit === u
+                          ? 'bg-primary text-primary-content'
+                          : 'text-base-content/40 hover:text-base-content/60',
+                      ].join(' ')}
+                    >
+                      °{u}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="flex rounded-[var(--radius-field)] overflow-hidden border-2 border-base-300">
                 {TEMP_OPTS.map((t, i) => (
                   <button
@@ -246,7 +267,9 @@ export function MateCalc() {
                   >
                     <span className="text-sm leading-none select-none">{t.emoji}</span>
                     <span className="text-xs font-bold">{t.label}</span>
-                    <span className="text-[9px] opacity-60 font-mono">{t.sub}</span>
+                    <span className="text-[9px] opacity-60 font-mono">
+                      ~{tempUnit === 'C' ? t.tempC : t.tempF}°{tempUnit} · ×{TEMP_FACTORS[t.id].toFixed(2)}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -312,9 +335,17 @@ export function MateCalc() {
 
             {/* Science note */}
             <p className="text-center text-[10px] text-base-content/25 leading-relaxed mt-1">
-              Based on Isolabella et al. (2010) kinetic data
-              <br />
               Average caffeine content ~12 mg/g dry yerba
+              <br />
+              Algorithm via{' '}
+              <a
+                href="https://dev.to/botanica_andina/yerba-mate-caffeine-i-analyzed-47-studies-to-build-a-calculator-that-actually-works-2601"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2 hover:text-base-content/50 transition-colors"
+              >
+                Botanica Andina · 47-study analysis
+              </a>
             </p>
           </div>
         </section>
