@@ -65,18 +65,14 @@ function getIntensityKey(mg: number): string {
 }
 
 export function MateCalc() {
-  const [theme, setTheme] = useState<Theme>('island-light')
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'island-light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'island-dark' : 'island-light'
+  })
   const [method, setMethod] = useState<Method>('gourd')
   const [grams, setGrams] = useState(50)
   const [refills, setRefills] = useState(6)
   const [tempPreset, setTempPreset] = useState<TempPreset>('hot')
-
-  useEffect(() => {
-    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const t: Theme = dark ? 'island-dark' : 'island-light'
-    setTheme(t)
-    document.documentElement.setAttribute('data-theme', t)
-  }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -116,6 +112,7 @@ export function MateCalc() {
 
         <button
           onClick={toggleTheme}
+          suppressHydrationWarning
           className="btn btn-ghost btn-circle mt-0.5 text-xl transition-all duration-300 hover:scale-110 active:scale-95"
           aria-label="Toggle theme"
         >
