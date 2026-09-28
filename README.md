@@ -2,6 +2,8 @@
 
 **Caffeine in every sip.** Mate Calc estimates how much caffeine is in your yerba mate, based on how you brew it.
 
+👉 **Try it live: [lukeirvine.github.io/mate-calc](https://lukeirvine.github.io/mate-calc/)**
+
 ## ✨ What it does
 
 Pick your brew, set your parameters, and get an instant caffeine estimate:
